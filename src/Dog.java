@@ -1,6 +1,10 @@
 public class Dog extends Animal{
-    public void makeSound(){
+
+
+    @Override
+    public void say() {
         System.out.println("Гав-гав");
+
     }
 }
 
