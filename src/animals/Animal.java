@@ -1,3 +1,5 @@
+package animals;
+
 public abstract class Animal {
     private String name;
     private int weight;
@@ -55,7 +57,6 @@ public abstract class Animal {
     public abstract void say();
 
 
-
     public void go() {
         System.out.println("я иду");
     }
@@ -72,21 +73,58 @@ public abstract class Animal {
 
 
     public void setName(String name) {
-        if (name != null && !name.equals("")) {// если переданное имя не пустое и не null
+        if (name != null && !name.equals("")) {         // если переданное имя не пустое и не null
             this.name = name;
         } else {
             System.out.println("Переданное значение name '" + name + "' не может быть пустым!");
         }
     }
 
+
     @Override
     public String toString() {
-        return "Привет!" +
-                " меня зовут " + name +
-                ", мой вес " + "- " +  weight + " кг" +
-                ", мой цвет " + "- " + color +
-                ", мой возраст " + age + " года";
+        String yearPadej = getYearPadej();
+        if (yearPadej == null) {
+            return "Возраст введен неверно";
+        }
+
+        return String.format("Привет! меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s",
+                getName(), getAge(), yearPadej, getWeight(), getColor());
     }
+
+    private String getYearPadej() {
+
+        if (getAge() > 50) {
+            return null;
+        }
+
+        if (getAge() >= 11 && getAge() <= 19) {
+            return "лет";
+        }
+
+        int oststok = getAge() % 10;
+        if (oststok == 0 || oststok >= 5) {
+            return "лет";
+        }
+
+        if (oststok == 1) {
+            return "год";
+        }
+
+
+        return "года";
+
+    }
+
 }
+
+//        return "Привет!" +
+//                " меня зовут " + name +
+//                ", мой вес " + "- " +  weight + " кг" +
+//                ", мой цвет " + "- " + color +
+//                ", мой возраст " + age + " года";
+//    }
+
+
 //        System.out.println("Привет! меня зовут" + " " + animal1.getName() + ", мне " + animal1.getAge() + " лет"
 //                + ", мой цвет " + animal1.getColor() + ", я вешу " + animal1.getWeight() + " кг");
