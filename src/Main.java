@@ -1,28 +1,29 @@
 import animals.Animal;
+import animals.birds.IFlying;
+import enumData.AnimalData;
 import enumData.CommandsData;
-
+import factory.AnimalFactory;
+import validators.DataValidator;
+import validators.NumberValidator;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.*;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Animal> animalList = new ArrayList<>();
 
+        AnimalFactory animalFactory = new AnimalFactory();
+        DataValidator commandValidator = new DataValidator();
+        NumberValidator numberValidator = new NumberValidator();
+
         while (true) {
             System.out.println("Введите комманду add/list/exit");
             String commandStr = scanner.next().toUpperCase().trim();
 
-            boolean isCommandExist = false;
-            for (CommandsData commandsData : CommandsData.values()) {
-                if (commandsData.name().equals(commandStr)) {
-                    isCommandExist = true;
-                    break;
-                }
-            }
-
-            if (!isCommandExist) {
+            if (!commandValidator.isValidate(commandStr, CommandsData.values())) {
                 System.out.println("Вы ввели не верную комманду");
                 continue;
             }
@@ -32,47 +33,73 @@ public class Main {
             switch (commandsData) {
                 case ADD:
 
-                case LIST:
-                    for (Animal animal : animalList) {
-                        System.out.println(animal.toString());
+                    String animalTypeStr = "";
+                    while (true) {
+                        System.out.println("Введите тип животного: cat/dog/duck");
+                        animalTypeStr = scanner.next().toUpperCase().trim();
+
+                        if (commandValidator.isValidate(animalTypeStr, AnimalData.values())) {
+                            break;
+                        }
+                        System.out.println("Вы ввели неверный тип животного");
                     }
+
+                    Animal animal = animalFactory.create(AnimalData.valueOf(animalTypeStr));
+
+
+                    while (true) {
+                    System.out.println("Введите имя животного");
+                    String nameStr = scanner.next();
+
+                    if (numberValidator.isNumber(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
+
+                        animal.setName(nameStr);
+                        break;
+                    }
+                        System.out.println("Вы ввели неверный имя животного");
+                    }
+
+                    System.out.println("Введите возраст животного");
+                    animal.setAge(scanner);
+
+                    System.out.println("Введите вес животного");
+                    animal.setWeight(scanner);
+
+                    while (true) {
+                        System.out.println("Введите цвет животного");
+                        String colorStr = scanner.next();
+
+                        if (numberValidator.isNumber(colorStr, Pattern.compile("^[а-яА-Я]+$"))) {
+
+                            animal.setColor(colorStr);
+                            break;
+                        }
+                        System.out.println("Вы ввели неверный цвет животного");
+                    }
+
+                    animal.say();
+                    animal.go();
+                    animal.drink();
+                    animal.eat();
+                    animalList.add(animal);
+                    if (animal instanceof IFlying) {
+                        ((IFlying) animal).fly();
+                    }
+                    break;
+
+                case LIST:
+                    if (animalList.isEmpty()) {
+                        System.out.println("Список пустой");
+                        continue;
+                    }
+                    for (Animal animalObj : animalList) {
+                        System.out.println(animalObj.toString());
+                    }
+                    break;
+
                 case EXIT:
                     System.exit(0);
             }
         }
-
-
-//        Cat cat1 = new Cat();
-//        Dog dog1 = new Dog();
-//        Duck duck1 = new Duck();
-//
-//
-//        dog1.setName("Бобик");
-//        dog1.setAge(9);
-//        dog1.setWeight(5);
-//        dog1.setColor("черный");
-//        cat1.setColor("белый");
-//
-//
-//        dog1.drink();
-//        dog1.eat();
-//        dog1.go();
-//        duck1.fly();
-//
-//        cat1.say();
-//        duck1.say();
-//        dog1.say();
-
-//        animal1.getInfo();
-//        System.out.println(Dog.toString());
-//        System.out.println(cat1.toString());
-//        animal1.getInfo();
-//        animal1.setWeight(-1);
-
-
-//        System.out.println("Привет! меня зовут" + " " + animal1.getName() + ", мне " + animal1.getAge() + " лет"
-//                + ", мой цвет " + animal1.getColor() + ", я вешу " + animal1.getWeight() + " кг");
-
-
     }
 }
