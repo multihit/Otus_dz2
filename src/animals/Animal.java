@@ -6,14 +6,14 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
-
 public abstract class Animal {
     private String name;
     private int weight;
     private String color;
     private int age;
     private DataValidator dataValidator = new DataValidator();
-   private DataValidator commandValidator = new DataValidator();
+    private DataValidator commandValidator = new DataValidator();
+
 
     //проверка возраста/веса
     private int getAgeWeightData(Scanner scanner) {
@@ -52,12 +52,37 @@ public abstract class Animal {
     }
 
 
+    //проверка имени/цвета на ввод
+    private String getNameColor(Scanner scanner) {
+
+        StringBuilder str;
+        while (true) {
+            String nameStr = scanner.next();
+
+            if (commandValidator.isDataByRegExp(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
+                str = new StringBuilder(nameStr);
+                break;
+            }
+
+            System.out.println("Вы ввели неверное имя|цвет животного (только ру алфавит)");
+        }
+
+        return String.valueOf(str);
+    }
+
+    public void setName(Scanner scanner) {
+        this.name = this.getNameColor(scanner);
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void setColor(Scanner scanner) {
         this.color = this.getNameColor(scanner);
     }
 
     public String getColor() {
-
         return color;
     }
 
@@ -78,35 +103,6 @@ public abstract class Animal {
         System.out.println("я ем");
     }
 
-    private String getNameColor(Scanner scanner) {
-
-
-
-
-    //проверка имени/цвета на ввод
-        StringBuilder str;
-        while (true) {
-            String nameStr = scanner.next();
-
-            if (commandValidator.isDataByRegExp(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
-                str = new StringBuilder(nameStr);
-                break;
-            }
-
-            System.out.println("Вы ввели неверное имя|цвет животного (только ру алфавит)");
-        }
-
-        return String.valueOf(str);
-    }
-
-
-    public void setName(Scanner scanner) {
-        this.name = this.getNameColor(scanner);
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {
