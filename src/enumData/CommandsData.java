@@ -1,7 +1,7 @@
 package enumData;
 
 public enum CommandsData {
-ADD, LIST, EXIT
+    ADD, LIST, EXIT
 
 
 }

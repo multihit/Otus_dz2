@@ -8,7 +8,6 @@ import validators.DataValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,20 +46,8 @@ public class Main {
                     Animal animal = animalFactory.create(AnimalData.valueOf(animalTypeStr));
 
 
-
-
-                    while (true) {
                     System.out.println("Введите имя животного");
-                    String nameStr = scanner.next();
-
-                    if (commandValidator.isDataByRegExp(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
-
-                        animal.setName(nameStr);
-                        break;
-                    }
-                        System.out.println("Вы ввели неверный имя животного");
-                    }
-
+                    animal.setName(scanner);
 
                     System.out.println("Введите возраст животного");
                     animal.setAge(scanner);
@@ -68,22 +55,8 @@ public class Main {
                     System.out.println("Введите вес животного");
                     animal.setWeight(scanner);
 
-
-
-
-                    while (true) {
-                        System.out.println("Введите цвет животного");
-                        String colorStr = scanner.next();
-
-                        if (commandValidator.isDataByRegExp(colorStr, Pattern.compile("^[а-яА-Я]+$"))) {
-
-                            animal.setColor(colorStr);
-                            break;
-                        }
-                        System.out.println("Вы ввели неверный цвет животного");
-                    }
-
-
+                    System.out.println("Введите цвет животного");
+                    animal.setColor(scanner);
 
                     animal.say();
                     animal.go();
@@ -94,7 +67,6 @@ public class Main {
                         ((IFlying) animal).fly();
                     }
                     break;
-
 
 
                 case LIST:

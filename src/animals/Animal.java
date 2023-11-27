@@ -5,46 +5,36 @@ import validators.DataValidator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+
+
 public abstract class Animal {
     private String name;
     private int weight;
     private String color;
     private int age;
     private DataValidator dataValidator = new DataValidator();
-    private int getAgeWeightData(Scanner scanner){
+   private DataValidator commandValidator = new DataValidator();
+
+    //проверка возраста/веса
+    private int getAgeWeightData(Scanner scanner) {
         int data;
-        while (true){
+        while (true) {
             String ageStr = scanner.next();
-            if (dataValidator.isDataByRegExp(ageStr, Pattern.compile("^\\d+$"))){
+            if (dataValidator.isDataByRegExp(ageStr, Pattern.compile("^\\d+$"))) {
                 data = Integer.parseInt(ageStr);
-                if (data >50 || data<=0){
-                    System.out.println("Ошибка, не удовлетворяет условию от 0 до 50 кг/лет");
+                if (data > 50 || data <= 0) {
+                    System.out.println("Ошибка, не удовлетворяет условию ( 0 до 50 кг/лет)");
                     continue;
                 }
                 break;
             }
-            System.out.println("Ошибка, не удовлетворяет условию");
+            System.out.println("Ошибка, не удовлетворяет условию (0 до 50 кг/лет)");
         }
         return data;
     }
 
-    //методы
-
 
     public void setAge(Scanner scanner) {
-//        int animalAge;
-//        while (true){
-//            String ageStr = scanner.next();
-//            if (numberValidator.isNumber(ageStr, Pattern.compile("^\\d+$"))){
-//                animalAge = Integer.parseInt(ageStr);
-//                if (animalAge >50 || animalAge<=0){
-//                    System.out.println("Ошибка возраста, введите возраст вновь");
-//                    continue;
-//                }
-//                break;
-//            }
-//            System.out.println("Ошибка возраста, введите возраст вновь");
-//        }
         this.age = this.getAgeWeightData(scanner);
     }
 
@@ -54,42 +44,22 @@ public abstract class Animal {
 
 
     public void setWeight(Scanner scanner) {
-//        int animalWeight;
-//        while (true){
-//            String weightStr = scanner.next();
-//            if (numberValidator.isNumber(weightStr, Pattern.compile("^\\d+$"))){
-//               animalWeight  = Integer.parseInt(weightStr);
-//                if (animalWeight >50 || animalWeight<=0){
-//                    System.out.println("Ошибка веса, введите вес заново");
-//                    continue;
-//                }
-//                break;
-//            }
-//            System.out.println("Ошибка веса, введите вес заново");
-//        }
-            this.weight = this.getAgeWeightData(scanner);
-        }
-
+        this.weight = this.getAgeWeightData(scanner);
+    }
 
     public int getWeight() {
         return weight;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+
+    public void setColor(Scanner scanner) {
+        this.color = this.getNameColor(scanner);
     }
 
     public String getColor() {
+
         return color;
     }
-
-//    private void print(String str) {
-//        System.out.println(str);
-//    }
-
-//    public void getInfo() {
-//        print("Привет! меня зовут" + getName() + " " + getAge() + " " + getWeight() + " " + getColor());
-//    }
 
     public abstract void say();
 
@@ -108,56 +78,31 @@ public abstract class Animal {
         System.out.println("я ем");
     }
 
-
-//    public boolean  setName(Scanner scanner) {
-//       String nameStr = null;
-//        while (true) {
-////            String nameStr = scanner.next();
-//            name = scanner.next().toUpperCase().trim();
-//            if (name != null && name.matches("^[а-яА-Я]+$")) {
-//                System.out.println("Имя может содержать только буквы, введите имя заново");
-//
-//                continue;
-//            }
-//break;
-//        }
-//        System.out.println("Имя может содержать только буквы");
-//
-//            this.name = nameStr;
-//        return false;
-//    }
+    private String getNameColor(Scanner scanner) {
 
 
 
-//    public void setName(String name) {
-//        public void setName(String name) {
-//            while (true) {
-//                if (!name.matches("[а-яА-Я]+")) {
-//                    System.out.println("имя не верно, введите буквы");
-//                    continue;
-//                }
-//                break;
-//            }
-//             this.name = name;
-//        }
 
+    //проверка имени/цвета на ввод
+        StringBuilder str;
+        while (true) {
+            String nameStr = scanner.next();
 
-    public void setName(String name) {
-        this.name = name;
+            if (commandValidator.isDataByRegExp(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
+                str = new StringBuilder(nameStr);
+                break;
+            }
+
+            System.out.println("Вы ввели неверное имя|цвет животного (только ру алфавит)");
+        }
+
+        return String.valueOf(str);
     }
-//public void setName(String name) {
-//    while (true) {
-//        System.out.println("Введите имя животного");
-//        String nameStr = scanner.next();
-//
-//        if (numberValidator.isNumber(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
-//
-//            animal.setName(nameStr);
-//            break;
-//        }
-//        System.out.println("Вы ввели неверный имя животного");
-//    }
-//}
+
+
+    public void setName(Scanner scanner) {
+        this.name = this.getNameColor(scanner);
+    }
 
     public String getName() {
         return name;
@@ -174,6 +119,7 @@ public abstract class Animal {
                 getName(), getAge(), yearPadej, getWeight(), getColor());
     }
 
+    //падеж окончаний возраста
     private String getYearPadej() {
 
         if (getAge() > 50) {
@@ -199,14 +145,3 @@ public abstract class Animal {
     }
 
 }
-
-//        return "Привет!" +
-//                " меня зовут " + name +
-//                ", мой вес " + "- " +  weight + " кг" +
-//                ", мой цвет " + "- " + color +
-//                ", мой возраст " + age + " года";
-//    }
-
-
-//        System.out.println("Привет! меня зовут" + " " + animal1.getName() + ", мне " + animal1.getAge() + " лет"
-//                + ", мой цвет " + animal1.getColor() + ", я вешу " + animal1.getWeight() + " кг");

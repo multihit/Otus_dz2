@@ -15,8 +15,9 @@ public class DataValidator {
         }
         return false;
     }
-    public boolean isDataByRegExp(String numberStr, Pattern pattern){
+//проверка заданых символов
+    public boolean isDataByRegExp(String numberStr, Pattern pattern) {
         Matcher matcher = pattern.matcher(numberStr);
-        return  matcher.find();
+        return matcher.find();
     }
 }
