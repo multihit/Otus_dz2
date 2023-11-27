@@ -1,6 +1,6 @@
 package animals;
 
-import validators.NumberValidator;
+import validators.DataValidator;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -10,27 +10,42 @@ public abstract class Animal {
     private int weight;
     private String color;
     private int age;
-    private NumberValidator numberValidator = new NumberValidator();
-
+    private DataValidator dataValidator = new DataValidator();
+    private int getAgeWeightData(Scanner scanner){
+        int data;
+        while (true){
+            String ageStr = scanner.next();
+            if (dataValidator.isDataByRegExp(ageStr, Pattern.compile("^\\d+$"))){
+                data = Integer.parseInt(ageStr);
+                if (data >50 || data<=0){
+                    System.out.println("Ошибка, не удовлетворяет условию от 0 до 50 кг/лет");
+                    continue;
+                }
+                break;
+            }
+            System.out.println("Ошибка, не удовлетворяет условию");
+        }
+        return data;
+    }
 
     //методы
 
 
     public void setAge(Scanner scanner) {
-        int animalAge;
-        while (true){
-            String ageStr = scanner.next();
-            if (numberValidator.isNumber(ageStr, Pattern.compile("^\\d+$"))){
-                animalAge = Integer.parseInt(ageStr);
-                if (animalAge >50 || animalAge<=0){
-                    System.out.println("Ошибка возраста, введите возраст вновь");
-                    continue;
-                }
-                break;
-            }
-            System.out.println("Ошибка возраста, введите возраст вновь");
-        }
-        this.age = animalAge;
+//        int animalAge;
+//        while (true){
+//            String ageStr = scanner.next();
+//            if (numberValidator.isNumber(ageStr, Pattern.compile("^\\d+$"))){
+//                animalAge = Integer.parseInt(ageStr);
+//                if (animalAge >50 || animalAge<=0){
+//                    System.out.println("Ошибка возраста, введите возраст вновь");
+//                    continue;
+//                }
+//                break;
+//            }
+//            System.out.println("Ошибка возраста, введите возраст вновь");
+//        }
+        this.age = this.getAgeWeightData(scanner);
     }
 
     public int getAge() {
@@ -39,20 +54,20 @@ public abstract class Animal {
 
 
     public void setWeight(Scanner scanner) {
-        int animalWeight;
-        while (true){
-            String ageStr = scanner.next();
-            if (numberValidator.isNumber(ageStr, Pattern.compile("^\\d+$"))){
-               animalWeight  = Integer.parseInt(ageStr);
-                if (animalWeight >50 || animalWeight<=0){
-                    System.out.println("Ошибка веса, введите вес заново");
-                    continue;
-                }
-                break;
-            }
-            System.out.println("Ошибка веса, введите вес заново");
-        }
-            this.weight = animalWeight;
+//        int animalWeight;
+//        while (true){
+//            String weightStr = scanner.next();
+//            if (numberValidator.isNumber(weightStr, Pattern.compile("^\\d+$"))){
+//               animalWeight  = Integer.parseInt(weightStr);
+//                if (animalWeight >50 || animalWeight<=0){
+//                    System.out.println("Ошибка веса, введите вес заново");
+//                    continue;
+//                }
+//                break;
+//            }
+//            System.out.println("Ошибка веса, введите вес заново");
+//        }
+            this.weight = this.getAgeWeightData(scanner);
         }
 
 

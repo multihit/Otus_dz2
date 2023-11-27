@@ -4,7 +4,7 @@ import enumData.AnimalData;
 import enumData.CommandsData;
 import factory.AnimalFactory;
 import validators.DataValidator;
-import validators.NumberValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +17,7 @@ public class Main {
 
         AnimalFactory animalFactory = new AnimalFactory();
         DataValidator commandValidator = new DataValidator();
-        NumberValidator numberValidator = new NumberValidator();
+
 
         while (true) {
             System.out.println("Введите комманду add/list/exit");
@@ -47,11 +47,13 @@ public class Main {
                     Animal animal = animalFactory.create(AnimalData.valueOf(animalTypeStr));
 
 
+
+
                     while (true) {
                     System.out.println("Введите имя животного");
                     String nameStr = scanner.next();
 
-                    if (numberValidator.isNumber(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
+                    if (commandValidator.isDataByRegExp(nameStr, Pattern.compile("^[а-яА-Я]+$"))) {
 
                         animal.setName(nameStr);
                         break;
@@ -59,23 +61,29 @@ public class Main {
                         System.out.println("Вы ввели неверный имя животного");
                     }
 
+
                     System.out.println("Введите возраст животного");
                     animal.setAge(scanner);
 
                     System.out.println("Введите вес животного");
                     animal.setWeight(scanner);
 
+
+
+
                     while (true) {
                         System.out.println("Введите цвет животного");
                         String colorStr = scanner.next();
 
-                        if (numberValidator.isNumber(colorStr, Pattern.compile("^[а-яА-Я]+$"))) {
+                        if (commandValidator.isDataByRegExp(colorStr, Pattern.compile("^[а-яА-Я]+$"))) {
 
                             animal.setColor(colorStr);
                             break;
                         }
                         System.out.println("Вы ввели неверный цвет животного");
                     }
+
+
 
                     animal.say();
                     animal.go();
@@ -86,6 +94,8 @@ public class Main {
                         ((IFlying) animal).fly();
                     }
                     break;
+
+
 
                 case LIST:
                     if (animalList.isEmpty()) {
