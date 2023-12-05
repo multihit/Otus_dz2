@@ -13,7 +13,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Animal> animalList = new ArrayList<>();
-
         AnimalFactory animalFactory = new AnimalFactory();
         DataValidator commandValidator = new DataValidator();
 
