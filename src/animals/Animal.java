@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 
+
 public abstract class Animal {
     private String name;
     private int weight;
