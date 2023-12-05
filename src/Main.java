@@ -31,7 +31,7 @@ public class Main {
             switch (commandsData) {
                 case ADD:
 
-                    String animalTypeStr = "";
+                    String animalTypeStr;
                     while (true) {
                         System.out.println("Введите тип животного: cat/dog/duck");
                         animalTypeStr = scanner.next().toUpperCase().trim();
